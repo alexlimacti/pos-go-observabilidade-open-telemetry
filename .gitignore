@@ -27,13 +27,3 @@ Thumbs.db
 
 # Environment variables
 .env
-
-# Go vendor directory
-/vendor/
-
-# Service binaries
-/service-a/service-a
-/service-b/service-b
-service-a
-service-b
-
