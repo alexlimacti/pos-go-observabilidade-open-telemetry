@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  service-a:
+    build:
+      context: ./service-a
+      dockerfile: Dockerfile
+    container_name: service-a
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVICE_B_URL=http://service-b:8081
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4318
+    depends_on:
+      - service-b
+      - otel-collector
+
+  service-b:
+    build:
+      context: ./service-b
+      dockerfile: Dockerfile
+    container_name: service-b
+    ports:
+      - "8081:8081"
+    environment:
+      - WEATHER_API_KEY=<YOUR_API_KEY>
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4318
+    depends_on:
+      - otel-collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.95.0
+    container_name: otel-collector
+    command: [--config /etc/otel-collector-config.yaml]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317" # gRPC
+      - "4318:4318" # HTTP
+    depends_on:
+      - zipkin
+
+  zipkin:
+    image: openzipkin/zipkin:2
+    container_name: zipkin
+    ports:
+      - "9411:9411"

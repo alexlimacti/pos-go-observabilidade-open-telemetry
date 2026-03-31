@@ -1,0 +1,39 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# IDE-specific folders
+.vscode/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Environment variables
+.env
+
+# Go vendor directory
+/vendor/
+
+# Service binaries
+/service-a/service-a
+/service-b/service-b
+service-a
+service-b
+
